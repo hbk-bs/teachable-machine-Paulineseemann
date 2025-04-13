@@ -1,0 +1,28 @@
+#section1 {
+    justify-content: center;
+    background-color: black;
+    border-radius: 15px;
+    
+}
+
+#section2 {
+    justify-content: center; 
+    background-color: black;
+    border-radius: 15px;
+}
+
+#section3{
+    justify-content: center;
+    border-radius: 15px;
+}
+
+h1{
+    color: aliceblue;
+    padding: 16px;
+    font-family: "Courier New", monospace;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin-top: 0px;
+}
+
