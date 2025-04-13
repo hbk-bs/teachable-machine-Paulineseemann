@@ -1,38 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>p5.js Starter Project</title>
-    <style>
-    html,
-    body {
-        height: 100%;
-    }
-
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    main {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gefahr erkannt!</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<main>
-    <div id="sketch"></div>
-    <a href="index.js">souce code</a>
-    </main>
-		<script src="lib/ml5.1.2.1.min.js"></script>
-		<script src="lib/p5.min.js"></script>
-    <!-- <script src="lib/p5.sound.min.js"></script> -->
+  <h1>Gefahrenpiktogramm Erkennung</h1>
 
-    <script src="index.js"></script>
+  <div class="controls">
+    <button onclick="init()">📷 Kamera starten</button>
+    <input type="file" accept="image/*" onchange="loadImage(event)" />
+  </div>
+
+  <!-- Webcam-Ausgabe -->
+  <div id="webcam-container" style="display: none;">
+    <video id="webcam" width="224" height="224" autoplay playsinline></video>
+  </div>
+
+  <!-- Alternativ: Hochgeladenes Bild -->
+  <img id="uploadedImage" style="display: none;" />
+
+  <!-- Ausgabe -->
+  <div id="result"></div>
+  <div id="reaction"></div>
+
+  <!-- Teachable Machine -->
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  <!-- Dein JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>

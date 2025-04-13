@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+  
+  .controls {
+    margin: 20px 0;
+  }
+  
+  #webcam-container {
+    margin-top: 20px;
+  }
+  
+  canvas {
+    border: 2px solid #333;
+    margin: 10px auto;
+    display: block;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 1.5em;
+  }
+  
+  #reaction {
+    margin-top: 20px;
+  }
+  
+  #reaction img {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+  
