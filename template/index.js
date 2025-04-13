@@ -1,82 +1,93 @@
-const URL = "https://teachablemachine.withgoogle.com/models/WtMIGXZEH/";
-let model, webcam, maxPredictions;
+// Classifier Variable
+let classifier;
+let imageModelURL = 'https://teachablemachine.withgoogle.com/models/WtMIGXZEH/';
 
+// Video
+let video;
+let label = '';
+
+// Reaktionen mit lustigen Sprüchen + Symbolen
 const reactions = {
   "Entzündlich": {
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/GHS-pictogram-flamme.svg/1200px-GHS-pictogram-flamme.svg.png",
-    text: "🔥 Brennt besser als dein Liebesleben!"
+    text: "🔥 Heißer als dein Smartphone, wenn du 15 Apps gleichzeitig laufen lässt!",
+    img: "https://upload.wikimedia.org/wikipedia/commons/6/60/GHS-pictogram-flamme.svg"
   },
   "Ätzend": {
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/GHS-pictogram-acid.svg/1200px-GHS-pictogram-acid.svg.png",
-    text: "☠️ Diese Flüssigkeit hat mehr Zerstörungskraft als Montagmorgen."
+    text: "☠️ Diese Chemikalie könnte dein Gesicht besser 'peelen' als jede Maske!",
+    img: "https://upload.wikimedia.org/wikipedia/commons/6/64/GHS-pictogram-acid.svg"
   },
   "Giftig": {
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/GHS-pictogram-skull.svg/1200px-GHS-pictogram-skull.svg.png",
-    text: "💀 Würde selbst eine Kakerlake umhauen."
+    text: "💀 Ein Tropfen davon und du kannst den Rest des Tages im Bett verbringen... für immer!",
+    img: "https://upload.wikimedia.org/wikipedia/commons/e/e6/GHS-pictogram-skull.svg"
   },
   "Explosiv": {
-    img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/GHS-pictogram-explos.svg/1200px-GHS-pictogram-explos.svg.png",
-    text: "💥 Boom! Mehr Drama als in deiner Lieblingsserie."
+    text: "💥 Explosiver als dein letzter Versuch, deine Matheprüfung zu bestehen!",
+    img: "https://upload.wikimedia.org/wikipedia/commons/a/a3/GHS-pictogram-explos.svg"
+  },
+  "Gesundheitsgefahr": {
+    text: "😷 Diese Substanz könnte dich schneller krank machen als der Winter in Berlin!",
+    img: "https://upload.wikimedia.org/wikipedia/commons/d/d6/GHS-pictogram-silhouette.svg"
+  },
+  "Umweltgefährlich": {
+    text: "🐟 Fische mögen das nicht, aber hey, vielleicht ist es auch nicht dein Lieblingsparfüm.",
+    img: "https://upload.wikimedia.org/wikipedia/commons/e/e1/GHS-pictogram-pollu.svg"
+  },
+  "Gas unter Druck": {
+    text: "🥶 Das Gas in dieser Flasche ist wie ein zorniger Bär – unberechenbar und sauer!",
+    img: "https://upload.wikimedia.org/wikipedia/commons/4/4a/GHS-pictogram-gas-cylinder.svg"
   }
 };
 
-async function init() {
-  const modelURL = URL + "model.json";
-  const metadataURL = URL + "metadata.json";
-
-  model = await tmImage.load(modelURL, metadataURL);
-  maxPredictions = model.getTotalClasses();
-
-  const flip = true;
-  webcam = new tmImage.Webcam(224, 224, flip);
-  await webcam.setup(); // Kamera freigeben
-  await webcam.play();  // Kamera starten
-  document.getElementById("webcam").replaceWith(webcam.canvas); // Canvas statt Video anzeigen
-
-  document.getElementById("webcam-container").style.display = "block";
-  document.getElementById("uploadedImage").style.display = "none";
-
-  window.requestAnimationFrame(loop);
+function preload() {
+  classifier = ml5.imageClassifier(imageModelURL + 'model.json');
 }
 
-async function loop() {
-  webcam.update();
-  await predict();
-  window.requestAnimationFrame(loop);
+function setup() {
+  let canvas = createCanvas(320, 240);
+  canvas.parent('sketch');
+
+  video = createCapture(VIDEO);
+  video.size(320, 240);
+  video.hide();
+
+  classifyVideo();
 }
 
-async function predict() {
-  const prediction = await model.predict(webcam.canvas);
-  prediction.sort((a, b) => b.probability - a.probability);
-  const best = prediction[0];
-  document.getElementById("result").innerText = `🧠 Erkannt: ${best.className} (${(best.probability * 100).toFixed(1)}%)`;
-  showReaction(best.className);
+function draw() {
+  background(0);
+  image(video, 0, 0);
+
+  fill(255);
+  textSize(14);
+  textAlign(CENTER);
+  text(label, width / 2, height - 10);
 }
 
-function loadImage(event) {
-  const image = document.getElementById('uploadedImage');
-  image.src = URL.createObjectURL(event.target.files[0]);
-  image.onload = async () => {
-    model ??= await tmImage.load(URL + "model.json", URL + "metadata.json");
-    document.getElementById("webcam-container").style.display = "none";
-    image.style.display = "block";
-    const prediction = await model.predict(image);
-    prediction.sort((a, b) => b.probability - a.probability);
-    const best = prediction[0];
-    document.getElementById("result").innerText = `🧠 Erkannt: ${best.className} (${(best.probability * 100).toFixed(1)}%)`;
-    showReaction(best.className);
-  };
+function classifyVideo() {
+  classifier.classify(video, gotResult);
 }
 
-function showReaction(label) {
+function gotResult(error, results) {
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  label = results[0].label;
+  classifyVideo();
+
+  // Zeige passenden Spruch und Symbol
   const reaction = reactions[label];
-  const container = document.getElementById("reaction");
+  const spruchDiv = document.getElementById("spruch");
+  const symbolImg = document.getElementById("symbol-img");
+
   if (reaction) {
-    container.innerHTML = `
-      <img src="${reaction.img}" alt="${label}" width="100"><br>
-      <p>${reaction.text}</p>
-    `;
+    spruchDiv.innerText = reaction.text;
+    symbolImg.src = reaction.img;
+    symbolImg.style.display = "block";
+    symbolImg.alt = label;
   } else {
-    container.innerHTML = "<p>🤷 Kein Spruch für dieses Symbol gefunden.</p>";
+    spruchDiv.innerText = "😶 Keine passende Reaktion gefunden.";
+    symbolImg.style.display = "none";
   }
 }

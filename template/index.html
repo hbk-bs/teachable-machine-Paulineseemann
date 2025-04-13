@@ -1,34 +1,27 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gefahr erkannt!</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 </head>
-<body>
-  <h1>Gefahrenpiktogramm Erkennung</h1>
 
-  <div class="controls">
-    <button onclick="init()">📷 Kamera starten</button>
-    <input type="file" accept="image/*" onchange="loadImage(event)" />
-  </div>
 
-  <!-- Webcam-Ausgabe -->
-  <div id="webcam-container" style="display: none;">
-    <video id="webcam" width="224" height="224" autoplay playsinline></video>
-  </div>
+<body> 
 
-  <!-- Alternativ: Hochgeladenes Bild -->
-  <img id="uploadedImage" style="display: none;" />
+<main>
+    <h1>In welcher Gefahrensituation befinde ich mich?</h1>
+    <div id="sketch"></div>
+    
+    </main>
 
-  <!-- Ausgabe -->
-  <div id="result"></div>
-  <div id="reaction"></div>
 
-  <!-- Teachable Machine -->
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-  <!-- Dein JavaScript -->
-  <script src="script.js"></script>
+
+
+		<script src="lib/ml5.1.2.1.min.js"></script>
+		<script src="lib/p5.min.js"></script>
+    <!-- <script src="lib/p5.sound.min.js"></script> -->
+    <script src="index.js"></script>
 </body>
 </html>
