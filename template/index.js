@@ -19,15 +19,16 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(320, 260);
+	createCanvas(400, 300);
 	
 	// Create the video
 	video = createCapture(VIDEO);
-	video.size(320, 240);
+	video.size(400, 250);
 	video.hide();
 
 	// Start classifying
 	classifyVideo();
+	
 }
 
 function draw() {
@@ -37,15 +38,21 @@ function draw() {
 
 	// Draw the label
 	fill(255);
-	textSize(16);
+	textSize(20);
+	textFont("'Nimbus Mono PS', 'Courier New', monospace");
 	textAlign(CENTER);
-	text(label, width / 2, height - 4);
+	text(label, width / 2, height - 8);
+	
 }
 
 // Get a prediction for the current video frame
 function classifyVideo() {
 	classifier.classify(video, gotResult);
 }
+
+
+
+
 
 // When we get a result
 function gotResult(results) {
@@ -56,3 +63,12 @@ function gotResult(results) {
 	// Classifiy again!
 	classifyVideo();
 }
+// Function to center the canvas
+function centerCanvas() {
+    // Calculate the position to center the canvas
+    let x = (windowWidth - width) / 2;
+    let y = (windowHeight - height) / 2;
+    // Set the position of the canvas
+    select('canvas').position(x, y);
+}
+
