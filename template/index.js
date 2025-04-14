@@ -39,7 +39,7 @@ function draw() {
 	// Draw the label
 	fill(255);
 	textSize(20);
-	textFont("'Nimbus Mono PS', 'Courier New', monospace");
+	textFont('Arial');
 	textAlign(CENTER);
 	text(label, width / 2, height - 8);
 	

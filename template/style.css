@@ -1,13 +1,12 @@
 body {
     margin: 0;
-    font-family: 
-font-weight: normal;
+    font-family: Arial, sans-serif;
     background-color: #121212;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 80vh;
+   
     justify-content: center;
 }
 
@@ -20,7 +19,7 @@ main {
     height: 100%;
 }
 
-#section1, #section2  {
+#section1, #section2 {
     width: 80%;
     max-width: 800px;
     background-color: #000;
@@ -30,6 +29,17 @@ main {
     margin: 10px;
 }
 
+#section3 {
+    margin: 20px;
+    
+    
+}
+
+img {
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+
+}
 
 h1 {
     color: aliceblue;
