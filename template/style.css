@@ -1,3 +1,4 @@
+/* ---------- Basis-Stile ---------- */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -10,15 +11,13 @@ body {
 }
 
 header {
- 
-    font-family: Arial, sans-serif;
     background-color: #121212;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
-   
     justify-content: center;
+    max-width: 600px;
 }
 
 main {
@@ -26,87 +25,191 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   
 }
 
-#section1 {
-    
-    max-width: 600px;
-    background-color: #000;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    margin: 20px;
-}
-
-#section2 {
-    margin: 20px;
-    max-width: 600px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    background-color: #000;
-    padding: 10px;
-    
-}
-
+#section1,
+#section2,
 #section3 {
-    margin: 20px;
+    width: 100%;
     max-width: 600px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
     background-color: #000;
     padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    margin: 20px;
 }
 
 img {
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    align-items: center;
-    justify-content: center;
     height: 80%;
     width: 100%;
-    
+    object-fit: cover;
 }
 
 h1 {
     color: aliceblue;
     text-align: center;
     text-transform: uppercase;
-
 }
 
 h3 {
     color: aliceblue;
     text-align: center;
-
-   
-
 }
 
-
-
-/* Zentrierung des Canvas */
-#sketch {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-
+/* ---------- Canvas ---------- */
 canvas {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     max-width: 500px;
-  }
-  
-  a {
+    margin-top: 50px;
+    display: block;
+}
+
+#canvas-container {
+    text-align: center;
+    margin-bottom: 20px; /* Space between canvas and label */
+}
+
+#webcam-canvas {
+    border: 1px solid #ccc; /* Optional: Add a border to the canvas */
+    display: block;
+    margin: 0 auto; /* Center the canvas */
+}
+
+/* ---------- Links ---------- */
+a {
     color: red;
     text-decoration: underline;
-  }
+}
 
-  a:hover {
-    text-decoration: none; /* Keine Unterstreichung beim Hover */
-    font-size: 1.1em;       /* Etwas größer werden */
-    color: #ff4d4d;         /* Optional: Farbverlauf beim Hover */
-  }
+a:hover {
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #ff4d4d;
+}
+
+/* ---------- Zurück-Button ---------- */
+#back-button {
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+#back-button button {
+    background-color: #ff4d4d;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#back-button button:hover {
+    background-color: #e04e4e;
+}
+
+/* ---------- Label ---------- */
+#label-container {
+    margin-top: 100px;
+    background-color: #000;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.2em; /* Adjust font size */
+    color: #333; /* Adjust text color */
+}
+
+#label {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* ---------- Allgemeine Layout-Hilfe ---------- */
+div, section {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Media Queries für Responsiveness ---------- */
+
+/* Smartphones (bis 480px) */
+@media (max-width: 480px) {
+    canvas {
+        max-width: 90vw;
+        height: auto;
+    }
+
+    #label {
+        font-size: 18px;
+    }
+
+    #back-button {
+        margin-top: 80px;
+    }
+
+    h1, h3 {
+        font-size: 18px;
+    }
+}
+
+/* Kleine Tablets / Smartphones quer (481px bis 767px) */
+@media (max-width: 767px) {
+    canvas {
+        max-width: 90vw;
+        height: auto;
+    }
+
+    #label-container {
+        margin-top: 60px;
+    }
+
+    h1, h3 {
+        font-size: 20px;
+    }
+}
+
+/* Tablets (768px bis 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    canvas {
+        max-width: 80vw;
+    }
+
+    #label {
+        font-size: 22px;
+    }
+
+    #label-container {
+        margin-top: 80px;
+    }
+}
+
+/* Kleine Desktops (1025px bis 1366px) */
+@media (min-width: 1025px) and (max-width: 1366px) {
+    canvas {
+        max-width: 70vw;
+    }
+
+    #label {
+        font-size: 24px;
+    }
+}
+
+/* Große Desktops (ab 1367px) */
+@media (min-width: 1367px) {
+    canvas {
+        max-width: 500px;
+    }
+
+    #label {
+        font-size: 26px;
+    }
+}

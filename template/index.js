@@ -1,7 +1,5 @@
 // Classifier Variable
 let classifier;
-// Model URL
-// HERE
 let imageModelURL = 'https://teachablemachine.withgoogle.com/models/WtMIGXZEH/';
 
 // Video
@@ -12,63 +10,61 @@ let label = '';
 let canvas = createCanvas(320, 260);
 canvas.parent("sketch");
 
+const labelElement = document.getElementById('label');
+
+// Example: Update the label dynamically
+function updateLabel(text) {
+    labelElement.textContent = text;
+}
+
 // Load the model first
 function preload() {
-	classifier = ml5.imageClassifier(imageModelURL + 'model.json');
-	console.log(classifier);
+    classifier = ml5.imageClassifier(imageModelURL + 'model.json');
+    console.log(classifier);
 }
 
 function setup() {
-	createCanvas(400, 300);
-	
-	// Create the video
-	video = createCapture(VIDEO);
-	video.size(400, 250);
-	video.hide();
+    createCanvas(400, 300);
+    
+    // Create the video
+    video = createCapture(VIDEO);
+    video.size(400, 300);
+    video.hide();
 
-	// Start classifying
-	classifyVideo();
-	
+    // Start classifying
+    classifyVideo();
 }
 
 function draw() {
-	background(0);
-	// Draw the video
-	image(video, 0, 0);
-
-	// Draw the label
-	fill(255);
-	textSize(20);
-	textFont('Arial');
-	textAlign(CENTER);
-	text(label, width / 2, height - 8);
-	
+    background(0);
+    // Draw the video
+    image(video, 0, 0);
+    
+    // Set the label in the HTML div
+    document.getElementById('label').textContent = label;
 }
 
 // Get a prediction for the current video frame
 function classifyVideo() {
-	classifier.classify(video, gotResult);
+    classifier.classify(video, gotResult);
 }
-
-
-
-
 
 // When we get a result
 function gotResult(results) {
-	console.log(results);
-	// The results are in an array ordered by confidence.
-	// console.log(results[0]);
-	label = results[0].label;
-	// Classifiy again!
-	classifyVideo();
+    console.log(results);
+    // The results are in an array ordered by confidence.
+    // Update the label variable with the classification result
+    label = results[0].label;
+    // Classify again!
+    classifyVideo();
 }
+
 // Function to center the canvas
 function centerCanvas() {
-    // Calculate the position to center the canvas
     let x = (windowWidth - width) / 2;
     let y = (windowHeight - height) / 2;
-    // Set the position of the canvas
     select('canvas').position(x, y);
 }
 
+// Example usage
+updateLabel('Gefahr erkannt!');
